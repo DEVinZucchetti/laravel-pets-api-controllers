@@ -14,6 +14,7 @@ Route::resource('pets', PetController::class)->only(
 );
 
 Route::get('races', [RaceController::class, 'index']);
+Route::get('races/{id}', [RaceController::class, 'show']);
 Route::post('races', [RaceController::class, 'store']);
 Route::put('races/{id}', [RaceController::class, 'update']);
 Route::delete('races/{id}', [RaceController::class, 'destroy']);

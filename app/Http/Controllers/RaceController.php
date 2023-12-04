@@ -65,6 +65,19 @@ class RaceController extends Controller {
         }
     }
 
-    public function destroy() {
+    public function destroy($id) {
+        try {
+            $race = Race::find($id);
+
+            if (!$race) {
+                return $this->response("Raça não encontrada", null, false, Response::HTTP_NOT_FOUND);
+            }
+
+            $race->delete();
+
+            return $this->response("Raça $race->name deletada com sucesso", null);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

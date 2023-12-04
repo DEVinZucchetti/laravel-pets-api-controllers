@@ -45,7 +45,24 @@ class RaceController extends Controller {
         }
     }
 
-    public function update() {
+    public function update($id, Request $request) {
+        try {
+            $race = Race::find($id);
+
+            if (!$race) {
+                return $this->response("Raça não encontrada", null, false, Response::HTTP_NOT_FOUND);
+            }
+
+            $request->validate([
+                'name' => 'required|string|min:3|max:50|unique:races',
+            ]);
+
+            $race->update($request->all());
+
+            return $this->response("Raça atualizada com sucesso", $race);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function destroy() {

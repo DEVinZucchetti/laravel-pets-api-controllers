@@ -30,7 +30,19 @@ class RaceController extends Controller {
         }
     }
 
-    public function store() {
+    public function store(Request $request) {
+        try {
+            $request->validate([
+                'name' => 'required|string|min:3|max:50|unique:races',
+            ]);
+
+            $data = $request->all();
+            $race = Race::create($data);
+
+            return $this->response("Raça cadastrada com sucesso", $race);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function update() {

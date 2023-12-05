@@ -62,7 +62,7 @@ class PeoplesController extends Controller
                 'cpf' => 'min: 11 | max: 20',
                 'contact' => 'max: 20',
             ]);
-            
+
             $people = PeopleModel::find($id);
 
             if(empty($people))
@@ -88,7 +88,7 @@ class PeoplesController extends Controller
             {
                 return $this->response("Pessoa não encontrada", null, false, Response::HTTP_NOT_FOUND);
             }
-            
+
             PeopleModel::destroy($id);
             return $this->response("Pessoa $people->name exluida com sucesso.", null);
         } catch(\Exception $e) {
